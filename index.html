@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciador de Pastas</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gerenciador de Pastas</h1>
+
+    <!-- Botões principais -->
+    <div class="options">
+      <button id="criar-pasta-btn">Criar Nova Pasta</button>
+      <button id="gerenciar-pasta-btn">Gerenciar Pastas</button>
+    </div>
+
+    <!-- Criar pasta -->
+    <div id="criar-pasta-section" class="section hidden">
+      <h2>Criar Nova Pasta</h2>
+      <form id="criar-pasta-form">
+        <label for="nome-pasta">Nome da Pasta:</label>
+        <input type="text" id="nome-pasta" placeholder="Digite o nome da pasta" required>
+        <button type="submit">Criar Pasta</button>
+      </form>
+    </div>
+
+    <!-- Gerenciar pastas -->
+    <div id="gerenciar-pasta-section" class="section hidden">
+      <h2>Gerenciar Pastas</h2>
+      <ul id="lista-pastas"></ul>
+    </div>
+    
+
+    <!-- Gerenciamento de produtos -->
+    <div id="produtos-section" class="section hidden">
+      <h2 id="nome-pasta-selecionada">Pasta ID:</h2>
+      <ul id="lista-produtos"></ul>
+      <form id="adicionar-produto-form">
+        <h3>Adicionar Produto</h3>
+        <label for="codigo-produto">Código do Produto:</label>
+        <input type="text" id="codigo-produto" placeholder="Digite o código do produto" required>
+        <label for="quantidade-produto">Quantidade:</label>
+        <input type="number" id="quantidade-produto" placeholder="Digite a quantidade" required>
+        <button type="submit">Adicionar Produto</button>
+      </form>
+    </div>
+
+    <!-- Editar produto -->
+    <div id="editar-produto-section" class="section hidden">
+      <h2>Editar Produto</h2>
+      <form id="editar-produto-form">
+        <label for="novo-codigo">Código do Produto:</label>
+        <input type="text" id="novo-codigo" required>
+        <label for="nova-quantidade">Quantidade:</label>
+        <input type="number" id="nova-quantidade" required>
+        <button type="submit">Salvar Alterações</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Botão para testar conexão -->
+  <div class="test-connection">
+    <button onclick="testarConexao()">Testar Conexão com Backend</button>
+  </div>
+
+  <!-- Botão para baixar pasta -->
+  <div class="download-section hidden" id="baixar-pasta-section">
+    <h2>Baixar Pasta</h2>
+    <button id="baixar-pasta-btn">Baixar Pasta como Arquivo Texto</button>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>
