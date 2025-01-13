@@ -176,14 +176,19 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'DELETE',
       });
 
-      if (response.ok) {
-        abrirPasta(pastaId);
+      if (!response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const error = await response.json();
+          alert(error.message);
+        } else {
+          alert('Erro inesperado no servidor.');
+        }
       } else {
-        const error = await response.json();
-        alert(error.message);
+        abrirPasta(pastaId);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao remover produto:', error);
       alert('Erro ao remover produto.');
     }
   };

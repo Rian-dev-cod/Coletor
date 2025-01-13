@@ -14,7 +14,7 @@ app.use(express.json());
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // Necessário para ambientes que exigem SSL
+    rejectUnauthorized: false, // Necessário para ambientes como Render ou Heroku
   },
 });
 
@@ -163,8 +163,8 @@ app.get('/baixar/:pasta_id', async (req, res) => {
       return res.status(404).json({ error: 'Nenhum produto encontrado nesta pasta' });
     }
 
-    let conteudo = ``;
-    produtos.forEach(produto => {
+    let conteudo = '';
+    produtos.forEach((produto) => {
       conteudo += `${produto.codigo}, ${produto.quantidade}${os.EOL}`;
     });
 
