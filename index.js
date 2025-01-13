@@ -30,6 +30,19 @@ pool.connect((err) => {
 // Servir arquivos estáticos (CSS e JS)
 app.use(express.static(path.join(__dirname)));
 
+// Endpoint para listar produtos de uma pasta
+app.get('/produtos/:pasta_id', async (req, res) => {
+  const { pasta_id } = req.params;
+
+  try {
+    const result = await pool.query('SELECT * FROM produtos WHERE pasta_id = $1', [pasta_id]);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Erro ao buscar produtos da pasta:', error);
+    res.status(500).json({ error: 'Erro ao buscar produtos da pasta' });
+  }
+});
+
 // Endpoint para criar uma nova pasta
 app.post('/criar-pasta', async (req, res) => {
   const { nome } = req.body;
@@ -51,19 +64,6 @@ app.get('/listar-pastas', async (req, res) => {
   } catch (error) {
     console.error('Erro ao buscar pastas no banco de dados:', error);
     res.status(500).json({ error: 'Erro ao buscar pastas no banco de dados' });
-  }
-});
-
-// Endpoint para listar produtos de uma pasta
-app.get('/produtos/:pasta_id', async (req, res) => {
-  const { pasta_id } = req.params;
-
-  try {
-    const result = await pool.query('SELECT * FROM produtos WHERE pasta_id = $1', [pasta_id]);
-    res.status(200).json(result.rows);
-  } catch (error) {
-    console.error('Erro ao buscar produtos da pasta:', error);
-    res.status(500).json({ error: 'Erro ao buscar produtos da pasta' });
   }
 });
 
