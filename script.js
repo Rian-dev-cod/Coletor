@@ -170,11 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Remover produto
   window.removerProduto = async (pastaId, codigo) => {
     try {
-      const response = await fetch(`/remover-produto/${pastaId}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ codigo }),
-      });
+      fetch(`/remover-produto/${pastaId}`, {
+		method: 'DELETE', // Alterado para DELETE
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ codigo }),
+	});
+
 
       if (response.ok) {
         abrirPasta(pastaId);
