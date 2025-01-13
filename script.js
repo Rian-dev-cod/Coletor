@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.innerHTML = `
           Código: ${prod.codigo}, Quantidade: ${prod.quantidade}
-          <button onclick="editarProduto('${prod.codigo}', '${prod.quantidade}')">Editar</button>
-          <button onclick="removerProduto('${pastaId}', '${prod.codigo}')">Remover</button>
+          <button onclick="editarProduto('${prod.id}', '${prod.codigo}', '${prod.quantidade}')">Editar</button>
+          <button onclick="removerProduto('${pastaId}', '${prod.id}')">Remover</button>
         `;
         listaProdutos.appendChild(li);
       });
@@ -134,22 +134,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Editar produto
-  window.editarProduto = (codigo, quantidade) => {
+  window.editarProduto = (id, codigo, quantidade) => {
     produtosSection.classList.add('hidden');
     editarProdutoSection.classList.remove('hidden');
     novoCodigo.value = codigo;
     novaQuantidade.value = quantidade;
+    editarProdutoForm.dataset.produtoId = id; // Armazena o ID do produto no formulário
   };
 
   editarProdutoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    const produtoId = editarProdutoForm.dataset.produtoId;
+
     try {
-      const response = await fetch(`/editar-produto/${pastaAtual}`, {
+      const response = await fetch(`/editar-produto/${pastaAtual}/${produtoId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          codigo: novoCodigo.value,
           quantidade: novaQuantidade.value,
         }),
       });
@@ -168,12 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Remover produto
-  window.removerProduto = async (pastaId, codigo) => {
+  window.removerProduto = async (pastaId, id) => {
     try {
-      const response = await fetch(`/remover-produto/${pastaId}`, {
+      const response = await fetch(`/remover-produto/${pastaId}/${id}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ codigo }),
       });
 
       if (response.ok) {

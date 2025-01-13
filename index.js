@@ -85,14 +85,14 @@ app.post('/produtos/:pasta_id', async (req, res) => {
 });
 
 // Endpoint para editar um produto
-app.post('/editar-produto/:pasta_id', async (req, res) => {
-  const { pasta_id } = req.params;
-  const { codigo, quantidade } = req.body;
+app.post('/editar-produto/:pasta_id/:id', async (req, res) => {
+  const { pasta_id, id } = req.params;
+  const { quantidade } = req.body;
 
   try {
     const result = await pool.query(
-      'UPDATE produtos SET quantidade = $1 WHERE pasta_id = $2 AND codigo = $3 RETURNING *',
-      [quantidade, pasta_id, codigo]
+      'UPDATE produtos SET quantidade = $1 WHERE pasta_id = $2 AND id = $3 RETURNING *',
+      [quantidade, pasta_id, id]
     );
 
     if (result.rowCount === 0) {
@@ -107,14 +107,13 @@ app.post('/editar-produto/:pasta_id', async (req, res) => {
 });
 
 // Endpoint para remover um produto
-app.delete('/remover-produto/:pasta_id', async (req, res) => {
-  const { pasta_id } = req.params;
-  const { codigo } = req.body;
+app.delete('/remover-produto/:pasta_id/:id', async (req, res) => {
+  const { pasta_id, id } = req.params;
 
   try {
     const result = await pool.query(
-      'DELETE FROM produtos WHERE pasta_id = $1 AND codigo = $2 RETURNING *',
-      [pasta_id, codigo]
+      'DELETE FROM produtos WHERE pasta_id = $1 AND id = $2 RETURNING *',
+      [pasta_id, id]
     );
 
     if (result.rowCount === 0) {
