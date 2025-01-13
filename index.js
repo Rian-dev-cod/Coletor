@@ -164,8 +164,6 @@ app.get('/baixar/:pasta_id', async (req, res) => {
       return res.status(404).json({ error: 'Nenhum produto encontrado nesta pasta' });
     }
 
-    let conteudo = `Pasta: ${nomePasta}${os.EOL}`;
-    conteudo += `Produtos:${os.EOL}`;
     produtos.forEach(produto => {
       conteudo += `${produto.codigo}, ${produto.quantidade}${os.EOL}`;
     });
