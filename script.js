@@ -170,12 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Remover produto
   window.removerProduto = async (pastaId, codigo) => {
     try {
-      fetch(`/remover-produto/${pastaId}`, {
-		method: 'DELETE', // Alterado para DELETE
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ codigo }),
-	});
-
+      const response = await fetch(`/remover-produto/${pastaId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ codigo }),
+      });
 
       if (response.ok) {
         abrirPasta(pastaId);
@@ -213,18 +212,3 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = `/baixar/${pastaId}`;
   };
 });
-
-// Tornar testarConexao global
-window.testarConexao = async () => {
-  try {
-    const response = await fetch('/test-connection');
-    if (!response.ok) throw new Error('Falha na conexão com o backend.');
-
-    const data = await response.json();
-    console.log('Resposta do backend:', data);
-    alert(data.message);
-  } catch (error) {
-    console.error('Erro ao conectar ao backend:', error);
-    alert('Não foi possível conectar ao backend.');
-  }
-};

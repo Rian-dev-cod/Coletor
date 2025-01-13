@@ -14,7 +14,7 @@ app.use(express.json());
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // Necessário para ambientes como Render
+    rejectUnauthorized: false, // Necessário para ambientes que exigem SSL
   },
 });
 
@@ -107,7 +107,7 @@ app.post('/editar-produto/:pasta_id', async (req, res) => {
 });
 
 // Endpoint para remover um produto
-app.post('/remover-produto/:pasta_id', async (req, res) => {
+app.delete('/remover-produto/:pasta_id', async (req, res) => {
   const { pasta_id } = req.params;
   const { codigo } = req.body;
 
@@ -165,7 +165,6 @@ app.get('/baixar/:pasta_id', async (req, res) => {
     }
 
     let conteudo = ``;
-    conteudo += ``;
     produtos.forEach(produto => {
       conteudo += `${produto.codigo}, ${produto.quantidade}${os.EOL}`;
     });
@@ -195,7 +194,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Atualize a inicialização do servidor
+// Inicialização do servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${PORT}`);
